@@ -51,11 +51,11 @@ export default class RichTextToolbar extends Component {
   }
 
   componentDidReceiveProps(newProps) {
-    const actions = newProps.actions ? newProps.actions : defaultActions;
-    this.setState({
-      actions,
-      ds: this.state.ds.cloneWithRows(this.getRows(actions, this.state.selectedItems))
-    });
+    // const actions = newProps.actions ? newProps.actions : defaultActions;
+    // this.setState({
+    //   actions,
+    //   ds: this.state.ds.cloneWithRows(this.getRows(actions, this.state.selectedItems))
+    // });
   }
 
   getRows(actions, selectedItems) {
@@ -63,6 +63,12 @@ export default class RichTextToolbar extends Component {
   }
 
   componentDidMount() {
+    const actions = this.props.actions ? this.props.actions : defaultActions;
+    this.setState({
+      actions,
+      ds: this.state.ds.cloneWithRows(this.getRows(actions, this.state.selectedItems))
+    });
+
     const editor = this.props.getEditor();
     if (!editor) {
       throw new Error('Toolbar has no editor!');
@@ -130,6 +136,7 @@ export default class RichTextToolbar extends Component {
             horizontal
             contentContainerStyle={{flexDirection: 'row'}}
             dataSource={this.state.ds}
+            removeClippedSubviews={false}
             renderRow= {(row) => this._renderAction(row.action, row.selected)}
         />
       </View>
