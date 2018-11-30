@@ -35,7 +35,7 @@ const defaultActions = [
   actions.alignLeft,
   actions.alignCenter,
   actions.alignRight,
-  actions.removeFormat
+  // actions.removeFormat
 ];
 
 function getDefaultIcon() {
@@ -53,7 +53,7 @@ function getDefaultIcon() {
   texts[actions.alignLeft] = RIcon("left");
   texts[actions.alignCenter] = RIcon("center");
   texts[actions.alignRight] = RIcon("right");
-  texts[actions.removeFormat] = RIcon("circleClear");
+  // texts[actions.removeFormat] = RIcon("circleClear");
   return texts;
 }
 
