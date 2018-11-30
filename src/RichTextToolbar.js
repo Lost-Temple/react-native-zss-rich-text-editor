@@ -1,25 +1,59 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {ListView, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {ListView, View, TouchableOpacity, Image, StyleSheet, Text} from 'react-native';
 import {actions} from './const';
+import RIcon from "./icomoonConf";
+
+class Icon extends Component{
+  static defaultProps = {
+    icon:"",
+    color:"#666",
+    size:20
+  };
+  render(){
+    let fontFamily = {fontFamily:"icomoon"};
+    if(this.props.icon=="H1" || this.props.icon=="H2" || this.props.icon == "H3"){
+      fontFamily = {};
+    }
+    return(
+      <Text style = {[{fontSize:this.props.size,color:this.props.color},fontFamily]}>{this.props.icon}</Text>
+    )
+  }
+}
 
 const defaultActions = [
-  actions.insertImage,
+  // actions.insertImage,
   actions.setBold,
   actions.setItalic,
   actions.insertBulletsList,
   actions.insertOrderedList,
-  actions.insertLink
+  actions.insertLink,
+  actions.heading1,
+  actions.heading2,
+  actions.heading3,
+  actions.setParagraph,
+  actions.alignLeft,
+  actions.alignCenter,
+  actions.alignRight,
+  actions.removeFormat
 ];
 
 function getDefaultIcon() {
   const texts = {};
-  texts[actions.insertImage] = require('../img/icon_format_media.png');
-  texts[actions.setBold] = require('../img/icon_format_bold.png');
-  texts[actions.setItalic] = require('../img/icon_format_italic.png');
-  texts[actions.insertBulletsList] = require('../img/icon_format_ul.png');
-  texts[actions.insertOrderedList] = require('../img/icon_format_ol.png');
-  texts[actions.insertLink] = require('../img/icon_format_link.png');
+  texts[actions.insertImage] = RIcon("image");
+  texts[actions.setBold] = RIcon("bold");
+  texts[actions.setItalic] = RIcon("italics");
+  texts[actions.insertBulletsList] = RIcon("list");
+  texts[actions.insertOrderedList] = RIcon("orderList");
+  texts[actions.insertLink] = RIcon("link");
+  texts[actions.heading1] = "H1";
+  texts[actions.heading2] = "H2";
+  texts[actions.heading3] = "H3";
+  texts[actions.setParagraph] = "正";
+  texts[actions.alignLeft] = RIcon("left");
+  texts[actions.alignCenter] = RIcon("center");
+  texts[actions.alignRight] = RIcon("right");
+  texts[actions.removeFormat] = RIcon("circleClear");
   return texts;
 }
 
@@ -50,13 +84,13 @@ export default class RichTextToolbar extends Component {
     };
   }
 
-  componentDidReceiveProps(newProps) {
+  // componentDidReceiveProps(newProps) {
     // const actions = newProps.actions ? newProps.actions : defaultActions;
     // this.setState({
     //   actions,
     //   ds: this.state.ds.cloneWithRows(this.getRows(actions, this.state.selectedItems))
     // });
-  }
+  // }
 
   getRows(actions, selectedItems) {
     return actions.map((action) => {return {action, selected: selectedItems.includes(action)};});
@@ -111,12 +145,12 @@ export default class RichTextToolbar extends Component {
       <TouchableOpacity
           key={action}
           style={[
-            {height: 50, width: 50, justifyContent: 'center'},
+            {height: 50, width: 50, justifyContent: 'center',alignItems:"center"},
             selected ? this._getButtonSelectedStyle() : this._getButtonUnselectedStyle()
           ]}
           onPress={() => this._onPress(action)}
       >
-        {icon ? <Image source={icon} style={{tintColor: selected ? this.props.selectedIconTint : this.props.iconTint}}/> : null}
+        {icon ? <Icon icon = {icon} color = {selected ? "#333" : "#666"}/> : null}
       </TouchableOpacity>
     );
   }
@@ -193,7 +227,7 @@ export default class RichTextToolbar extends Component {
 
 const styles = StyleSheet.create({
   defaultSelectedButton: {
-    backgroundColor: 'red'
+    // backgroundColor: 'red'
   },
   defaultUnselectedButton: {}
 });
